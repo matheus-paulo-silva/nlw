@@ -1,35 +1,59 @@
 import React from 'react';
 
 import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
+import api from '../../services/api';
 
 import './styles.css';
 
-function TeacherItem() {
+
+export interface Teacher {
+    
+        id: number;
+        avatar: string;
+        bio: string;
+        cost: number;
+        name: string;
+        subject: string;
+        whatsapp: string;
+}
+
+interface TeacherItemProps {
+    teacher: Teacher;
+}
+
+
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher })=> {
+    
+    function createNewConnection() {
+      api.post('connections', {
+         user_id: teacher.id
+    })    
+ }
+
     return (
         <article className="teacher-item">
         <header>
-            <img src="https://avatars1.githubusercontent.com/u/68401114?s=460&u=6e97dde5f981571dc6a8d9ebfdb60e8f2b6de65f&v=4" alt="Matheus Paulo Silva"></img>
+            <img src={teacher.avatar} alt={teacher.name}></img>
              <div>
-                 <strong>Matheus Paulo Silva</strong>
-                 <span>Matemática</span>
+                <strong>{teacher.name}</strong>
+                 <span>{teacher.subject}</span>
              </div>
          </header>
 
          <p>
-             Professor de Matemática avançada.
-             <br /><br />
-             Entusiasta por ensinar matemática aos seus alunos e por resolver os problemas das melhroes formas possíveis utilizando sempre os conceitos básicos da matemática para soluciona-los.
+            {teacher.bio}
          </p>
 
          <footer>
              <p>
                  Preço/hora
-                 <strong>R$: 150,00</strong>
+                 <strong>{teacher.cost}</strong>
              </p>
-             <button type="button">
+             <a target="_blank" onClick={createNewConnection} href={`https://wa.me/${teacher.whatsapp}`}>
                  <img src={whatsappIcon} alt="Whatsapp"/>
                  Entrar em contato
-             </button>
+             </a>
          </footer>
     </article>
     )

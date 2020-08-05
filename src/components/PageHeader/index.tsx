@@ -9,6 +9,7 @@ import './styles.css'
 
 interface PageHeaderProps { //definir o formato das tipagens de um objeto
     title: string;
+    description?: string; //ponto de interrogação significa que não é obrigatório
 } 
 
 const PageHeader: React.FC<PageHeaderProps> = (props) => { 
@@ -23,6 +24,7 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
 
         <div className="header-content">
             <strong>{props.title}</strong>
+            { props.description && <p>{props.description}</p> } 
 
             {props.children}
         </div>
